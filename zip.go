@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 type Zipper struct {
@@ -34,8 +35,17 @@ func (z *Zipper) Zip(filename string) error {
 	w := zip.NewWriter(nf)
 	defer w.Close()
 
+	start := time.Now()
+
 	err = filepath.WalkDir(z.Path, z.walk(w))
-	return err
+	if err != nil {
+		return err
+	}
+
+	elapsed := time.Since(start)
+	log.Println("files were zipped in: " + elapsed.String())
+
+	return nil
 }
 
 func (z *Zipper) walk(writer *zip.Writer) fs.WalkDirFunc {
@@ -59,12 +69,10 @@ func (z *Zipper) walk(writer *zip.Writer) fs.WalkDirFunc {
 			return err
 		}
 
-		size, err := io.Copy(zf, file)
+		_, err = io.Copy(zf, file)
 		if err != nil {
 			return err
 		}
-
-		log.Printf("%d bytes zipped from %s", size, path)
 
 		return nil
 	}

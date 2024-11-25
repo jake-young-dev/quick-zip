@@ -2,6 +2,7 @@ package quickzip
 
 import (
 	"bytes"
+	"fmt"
 	"os"
 	"testing"
 )
@@ -32,6 +33,9 @@ func TestZip(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	fmt.Println(f)
+	fmt.Println("------")
+	fmt.Println(ff)
 	if !bytes.Equal(f, ff) {
 		t.Fatal("files do not match")
 	}

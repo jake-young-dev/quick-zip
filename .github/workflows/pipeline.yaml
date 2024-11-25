@@ -23,13 +23,6 @@ jobs:
       with:
         go-version: '1.22.6'
 
-    - name: Set up test files
-      run: |
-        sudo mkdir ./data
-        sudo mkdir ./data/files
-        sudo touch ./data/files/test.txt
-        sudo tar -czvf ./data/compare-file.tar.gz ./data/files
-
     - name: Test
       run: sudo go test -v -cover
 

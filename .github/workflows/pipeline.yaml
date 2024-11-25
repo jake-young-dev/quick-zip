@@ -28,7 +28,6 @@ jobs:
         sudo mkdir data
         sudo mkdir /data/files
         sudo touch /data/files/test.txt
-        sudo echo "testing" >> /data/files/test.txt
         sudo tar czf /data/compare-file.tar.gz /data/files
 
     - name: Test

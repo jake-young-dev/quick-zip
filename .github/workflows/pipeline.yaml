@@ -29,13 +29,10 @@ jobs:
         sudo mkdir /data/files
         sudo touch /data/files/test.txt
         sudo tar czf /data/compare-file.tar.gz /data/files
-        sudo chmod -R 777 /data
-        ls -la /
-        ls -la /data
 
     - name: Test
-      run: go test -v -cover
+      run: sudo go test -v -cover
 
     - name: Cleanup
       run: |
-        rm -r /data/
+        sudo rm -r /data/

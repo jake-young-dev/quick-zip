@@ -56,7 +56,7 @@ func TestMain(t *testing.T) {
 	//run actual zip test
 	t.Run("Test zip", func(t *testing.T) {
 		z := NewZipper(filesToZip)
-		err := z.Zip(testFile)
+		_, err := z.Zip(testFile)
 		if err != nil {
 			t.Errorf("could not zip file %s: %v", testFile, err)
 		}
@@ -67,7 +67,7 @@ func TestMain(t *testing.T) {
 			t.Errorf("could not read file %s: %v", testFile, err)
 		}
 
-		//is this local or pipeline?
+		//os check
 		if runtime.GOOS == "windows" {
 			if !bytes.Equal(fileBytesWindows, ff) {
 				t.Error("zipped files do not match")

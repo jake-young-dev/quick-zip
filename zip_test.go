@@ -2,6 +2,7 @@ package quickzip
 
 import (
 	"bytes"
+	"log"
 	"os"
 	"runtime"
 	"testing"
@@ -68,6 +69,9 @@ func TestMain(t *testing.T) {
 			t.Errorf("could not read file %s: %v", testFile, err)
 		}
 
+		log.Println(runtime.GOOS)
+		log.Println(ff)
+		log.Println(fileBytesLinux)
 		//is this local or pipeline?
 		if runtime.GOOS == "windows" {
 			if !bytes.Equal(fileBytesWindows, ff) {

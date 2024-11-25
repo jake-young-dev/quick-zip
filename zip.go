@@ -4,7 +4,6 @@ import (
 	"archive/zip"
 	"io"
 	"io/fs"
-	"log"
 	"os"
 	"path/filepath"
 	"time"
@@ -25,27 +24,32 @@ func NewZipper(dir string) *Zipper {
 	}
 }
 
-func (z *Zipper) Zip(filename string) error {
+// compresses the content found in the struct.Path into filename on the filesystem, returns any errors
+// and the time to zip
+func (z *Zipper) Zip(filename string) (string, error) {
+	//create compressed file
 	nf, err := os.Create(filename)
 	if err != nil {
-		return err
+		return "", err
 	}
 	defer nf.Close()
 
 	w := zip.NewWriter(nf)
 	defer w.Close()
 
+	//start timer
 	start := time.Now()
 
+	//walk directories and files to compress
 	err = filepath.WalkDir(z.Path, z.walk(w))
 	if err != nil {
-		return err
+		return "", err
 	}
 
+	//photo finish
 	elapsed := time.Since(start)
-	log.Println("files were zipped in: " + elapsed.String())
 
-	return nil
+	return elapsed.String(), nil
 }
 
 func (z *Zipper) walk(writer *zip.Writer) fs.WalkDirFunc {

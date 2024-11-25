@@ -25,14 +25,11 @@ jobs:
 
     - name: Set up test files
       run: |
-        sudo mkdir data
-        sudo mkdir /data/files
-        sudo touch /data/files/test.txt
-        sudo tar czf /data/compare-file.tar.gz /data/files
+        sudo mkdir ./data
+        sudo mkdir ./data/files
+        sudo touch ./data/files/test.txt
+        sudo tar czf ./data/compare-file.tar.gz ./data/files
 
     - name: Test
       run: sudo go test -v -cover
 
-    - name: Cleanup
-      run: |
-        sudo rm -r /data/

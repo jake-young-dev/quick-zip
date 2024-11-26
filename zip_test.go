@@ -56,7 +56,7 @@ func TestMain(t *testing.T) {
 	//run actual zip test
 	t.Run("Test zip", func(t *testing.T) {
 		z := NewZipper(filesToZip)
-		_, err := z.Zip(testFile)
+		err := z.Zip(testFile)
 		if err != nil {
 			t.Errorf("could not zip file %s: %v", testFile, err)
 		}
